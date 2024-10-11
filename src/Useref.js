@@ -44,5 +44,17 @@ function reducer(state, action){
         default:
             return state;
     }
+}
+function App(){
+    const [state, dispatch]=useReducer(reducer,intialState);
+    return(
+        <div>
+            <h2>Reducer Example</h2>
+            <p>current Count {state.count}</p>
+            <button onClick={()=>dispatch({type:'INCREMENT'})}>Increment </button>
+            <button onClick={}>Decrement</button>
+            <button onClick={}>Reset</button>
 
+        </div>
+    )
 }
