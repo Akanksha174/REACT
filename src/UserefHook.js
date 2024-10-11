@@ -24,7 +24,7 @@ const App=()=>{
         console.log('result count calculated')
         return num*10
     }
-    const memoValue = useMemo((=>{
+    const memoValue = useMemo(({
         
     
     }))
