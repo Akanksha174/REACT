@@ -260,35 +260,47 @@
 // export default App;
 
 
-import React from 'react';
-import './App.css';
-const App = () => {
-    return (
-        <>
-            <nav className="navbar">
-                <div className="logo">
-                    <img src="logo.png" alt="logo" />
-                    <span>CheatenAI</span>
-                </div>
-                <ul className="nav-links">
-                    <li>Welcome</li>
-                    <li>Pages</li>
-                    <li>Dashboard</li>
-                    <li>Pricing</li>
-                    <li>Sign In</li>
-                    <li><button className="btn1">Get Started for free</button></li>
-                    <li><button className="btn1">.</button></li>
-                </ul>
-            </nav>
+// import React from 'react';
+// import './App.css';
+// const App = () => {
+//     return (
+//         <>
+//             <nav className="navbar">
+//                 <div className="logo">
+//                     <img src="logo.png" alt="logo" />
+//                     <span>CheatenAI</span>
+//                 </div>
+//                 <ul className="nav-links">
+//                     <li>Welcome</li>
+//                     <li>Pages</li>
+//                     <li>Dashboard</li>
+//                     <li>Pricing</li>
+//                     <li>Sign In</li>
+//                     <li><button className="btn1">Get Started for free</button></li>
+//                     <li><button className="btn1">.</button></li>
+//                 </ul>
+//             </nav>
 
-            <header className="head">
-                <h1>Unlock the Power of <br></br>CheatenAI AI<br></br>with Smartest AI</h1>
-                <p>Not Visible</p>
-                <button className="btn">Start Writing for free</button>
-                <p><input type="checkbox"/> No credit card required</p>
-            </header>
-        </>
-    );
+//             <header className="head">
+//                 <h1>Unlock the Power of <br></br>CheatenAI AI<br></br>with Smartest AI</h1>
+//                 <p>Not Visible</p>
+//                 <button className="btn">Start Writing for free</button>
+//                 <p><input type="checkbox"/> No credit card required</p>
+//             </header>
+//         </>
+//     );
+// }
+
+// export default App;
+
+import React from "react";
+import CounterCom from "./FormField";
+const App=()=>{
+    return(
+        <center>
+            <CounterCom/>
+        </center>
+    )
 }
-
 export default App;
+
