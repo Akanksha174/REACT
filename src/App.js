@@ -314,7 +314,28 @@ function App(){
   <div>
     <h1>form</h1>
     {isSubmitted && <p>Form is successfully submitted</p>}
-    <form onSubmit={handleSubmit}></form>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label>Name</label>
+        <input type="text" id="name" name ="name" 
+        value ={formData.name}
+        onChange={handleChange}></input>
+        {errors.name && <p>{errors.name}</p>}
+      </div>
+      <div>
+        <label>Job Application applied for:</label>
+        <select id="position" name ="position" 
+        value ={formData.position}
+        onChange={handleChange}>
+          <option>Select a Position</option>
+          <option>Developer</option>
+          <option>Designer</option>
+          <option>Data Science Engg.</option>
+          </select>
+          {errors.position && <p>{errors.position}</p>}
+      </div>
+      <button>Submit</button>
+    </form>
   </div>  
   )
 }
