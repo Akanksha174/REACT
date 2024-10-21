@@ -293,14 +293,29 @@
 
 // export default App;
 
-import React from "react";
-import CounterCom from "./FormField";
-const App=()=>{
-    return(
-        <center>
-            <CounterCom/>
-        </center>
-    )
+// import React from "react";
+// import CounterCom from "./FormField";
+// const App=()=>{
+//     return(
+//         <center>
+//             <CounterCom/>
+//         </center>
+//     )
+// }
+// export default App;
+
+import React, {useState} from "react";
+function App(){
+  const [formData, setFormData] = useState();
+  const [errors, setErrors] = useState();
+  const[isSubmitted, setIsSubmitted] = useState(false)
+
+  return(
+  <div>
+    <h1>form</h1>
+    {isSubmitted && <p>Form is successfully submitted</p>}
+    <form onSubmit={handleSubmit}></form>
+  </div>  
+  )
 }
 export default App;
-
