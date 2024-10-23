@@ -303,94 +303,150 @@
 //     )
 // }
 // export default App;
-import React, { useState } from "react";
+// import React, { useState } from "react";
 
-function App() {
-  const [formData, setFormData] = useState({ name: '', email: '', position: '' });
-  const [errors, setErrors] = useState({});
-  const [isSubmitted, setIsSubmitted] = useState(false);
+// function App() {
+//   const [formData, setFormData] = useState({ name: '', email: '', position: '' });
+//   const [errors, setErrors] = useState({});
+//   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData({ ...formData, [name]: value });
+//   };
 
-  const validateForm = () => {
-    const formErrors = {};
+//   const validateForm = () => {
+//     const formErrors = {};
     
-    if (!formData.name) {
-      formErrors.name = "Name is required";
-    }
+//     if (!formData.name) {
+//       formErrors.name = "Name is required";
+//     }
     
-    if (!formData.email) {
-      formErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      formErrors.email = "Email is not valid";
-    }
+//     if (!formData.email) {
+//       formErrors.email = "Email is required";
+//     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+//       formErrors.email = "Email is not valid";
+//     }
 
-    if (!formData.position || formData.position === "Select a Position") {
-      formErrors.position = "Please select a job position";
-    }
+//     if (!formData.position || formData.position === "Select a Position") {
+//       formErrors.position = "Please select a job position";
+//     }
     
-    setErrors(formErrors);
-    return Object.keys(formErrors).length === 0;
-  };
+//     setErrors(formErrors);
+//     return Object.keys(formErrors).length === 0;
+//   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitted(false);
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     setIsSubmitted(false);
 
-    if (validateForm()) {
-      console.log("Form data is submitted", formData);
-      setIsSubmitted(true);
-      setFormData({ name: '', email: '', position: '' });
+//     if (validateForm()) {
+//       console.log("Form data is submitted", formData);
+//       setIsSubmitted(true);
+//       setFormData({ name: '', email: '', position: '' });
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <h1>Form</h1>
+//       {isSubmitted && <p>Form is successfully submitted</p>}
+//       <form onSubmit={handleSubmit}>
+//         <div>
+//           <label>Name</label>
+//           <input
+//             type="text"
+//             id="name"
+//             name="name"
+//             value={formData.name}
+//             onChange={handleChange}
+//           />
+//           {errors.name && <p>{errors.name}</p>}
+//         </div>
+//         <div>
+//           <label>Email</label>
+//           <input
+//             type="email"
+//             id="email"
+//             name="email"
+//             value={formData.email}
+//             onChange={handleChange}
+//           />
+//           {errors.email && <p>{errors.email}</p>}
+//         </div>
+//         <div>
+//           <label>Job Application applied for:</label>
+//           <select
+//             id="position"
+//             name="position"
+//             value={formData.position}
+//             onChange={handleChange}
+//           >
+//             <option>Select a Position</option>
+//             <option>Developer</option>
+//             <option>Designer</option>
+//             <option>Data Science Engg.</option>
+//           </select>
+//           {errors.position && <p>{errors.position}</p>}
+//         </div>
+//         <button type="submit">Submit</button>
+//       </form>
+//     </div>
+//   );
+// }
+
+// export default App;
+
+///////////////////////////-----------AAAAAAAXXXXXIIIIIIOOOOOOOOOSSSSSSS------------
+
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
+
+const App = () => {
+  // API = https://jsonplaceholder.typicode.com/users
+  const [myData, setMyData] = useState([]);
+  const [isError, setIsError] = useState("");
+
+  // Fetch data using axios on component mount
+  useEffect(() => {
+    axios.get("https://jsonplaceholder.typicode.com/users")
+      .then((response) => setMyData(response.data))
+      .catch((error) => setIsError(error.message));
+  }, []);
+
+  // Fetch data using fetch API manually
+  const fetchData = async () => {
+    try {
+      const response = await fetch("https://jsonplaceholder.typicode.com/users");
+      if (!response.ok) {
+        throw new Error("There is some error");
+      }
+      const data = await response.json();
+      setMyData(data);
+    } catch (error) {
+      setIsError(error.message);
     }
   };
 
   return (
     <div>
-      <h1>Form</h1>
-      {isSubmitted && <p>Form is successfully submitted</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-          />
-          {errors.name && <p>{errors.name}</p>}
-        </div>
-        <div>
-          <label>Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-          {errors.email && <p>{errors.email}</p>}
-        </div>
-        <div>
-          <label>Job Application applied for:</label>
-          <select
-            id="position"
-            name="position"
-            value={formData.position}
-            onChange={handleChange}
-          >
-            <option>Select a Position</option>
-            <option>Developer</option>
-            <option>Designer</option>
-            <option>Data Science Engg.</option>
-          </select>
-          {errors.position && <p>{errors.position}</p>}
-        </div>
-        <button type="submit">Submit</button>
-      </form>
+      <h1>Axios and fetch</h1>
+      {/* Display any error */}
+      {isError && <p style={{ color: "red" }}>{isError}</p>}
+
+      {/* Display user data */}
+      <div>
+        {myData.map((user) => (
+          <div key={user.id}>
+            <p>Email: {user.email}</p>
+            <p>Phone: {user.phone}</p>
+            <p>Website: {user.website}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Button to trigger fetchData */}
+      <button onClick={fetchData}>Fetch Users with Fetch API</button>
     </div>
   );
 }
