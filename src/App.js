@@ -454,26 +454,114 @@
 // export default App;
 
 //"https://jsonplaceholder.typicode.com/posts"
-
 import axios from "axios";
-import React , { useState, useEffect } from "react";
-const App=()=>{
-  const[posts, setPosts] = useState()
+import React, { useState, useEffect } from "react";
 
-  const fetchPosts  =async()=>{
-    try{
-      const response = await axios.get("'https://jsonplaceholder.typicode.com/posts'")
-      setPosts(response.data)
-    }catch(error){
-      console.log("error is there")
-    }
-  }
-  //create a new post 
-  const createPost = async()=>{
-    try{
-      const response = await axios.post("'https://jsonplaceholder.typicode.com/posts'")
-    }
-  }
+const App = () => {
+  const [posts, setPosts] = useState([]);
+  const [newPost, setNewPost] = useState({ title: "", body: "" });
+  const [isEditing, setIsEditing] = useState(false);
+  const [postIdToEdit, setPostIdToEdit] = useState(null);
 
-  useEffect(())
-}
+  // Fetch all posts
+  const fetchPosts = async () => {
+    try {
+      const response = await axios.get("https://jsonplaceholder.typicode.com/posts");
+      setPosts(response.data);
+    } catch (error) {
+      console.log("Error fetching posts", error);
+    }
+  };
+
+  // Handle input change
+  const handleChange = (e) => {
+    setNewPost({ ...newPost, [e.target.name]: e.target.value });
+  };
+
+  // Create a new post
+  const createPost = async () => {
+    try {
+      const response = await axios.post("https://jsonplaceholder.typicode.com/posts", newPost);
+      setPosts([...posts, response.data]);
+      setNewPost({ title: "", body: "" });
+    } catch (error) {
+      console.log("Error creating post", error);
+    }
+  };
+
+  // Update the post
+  const updatePost = async () => {
+    try {
+      const response = await axios.put(
+        `https://jsonplaceholder.typicode.com/posts/${postIdToEdit}`,
+        newPost
+      );
+      setPosts(
+        posts.map((post) => (post.id === postIdToEdit ? response.data : post))
+      );
+      setNewPost({ title: "", body: "" });
+      setIsEditing(false);
+      setPostIdToEdit(null);
+    } catch (error) {
+      console.log("Error updating post", error);
+    }
+  };
+
+  // Edit post handler
+  const editPost = (post) => {
+    setIsEditing(true);
+    setNewPost({ title: post.title, body: post.body });
+    setPostIdToEdit(post.id);
+  };
+
+  // Delete post
+  const deletePost = async (postId) => {
+    try {
+      await axios.delete(`https://jsonplaceholder.typicode.com/posts/${postId}`);
+      setPosts(posts.filter((post) => post.id !== postId));
+    } catch (error) {
+      console.log("Error deleting post", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  return (
+    <div>
+      <h1>Axios CRUD operations</h1>
+      <input
+        type="text"
+        name="title"
+        placeholder="Title"
+        value={newPost.title}
+        onChange={handleChange}
+      />
+      <input
+        type="text"
+        name="body"
+        placeholder="Body of the post"
+        value={newPost.body}
+        onChange={handleChange}
+      />
+      <button onClick={isEditing ? updatePost : createPost}>
+        {isEditing ? "Update" : "Create"}
+      </button>
+
+      <h2>Posts</h2>
+      <div>
+        {posts.map((post) => (
+          <div key={post.id}>
+            <h3>{post.title}</h3>
+            <p>{post.body}</p>
+            <button onClick={() => editPost(post)}>Edit</button>
+            <button onClick={() => deletePost(post.id)}>Delete</button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default App;
