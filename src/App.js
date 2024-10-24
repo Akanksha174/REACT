@@ -399,56 +399,81 @@
 
 ///////////////////////////-----------AAAAAAAXXXXXIIIIIIOOOOOOOOOSSSSSSS------------
 
-import React, { useState, useEffect } from "react";
-import axios from 'axios';
+// import React, { useState, useEffect } from "react";
+// import axios from 'axios';
 
-const App = () => {
-  // API = https://jsonplaceholder.typicode.com/users
-  const [myData, setMyData] = useState([]);
-  const [isError, setIsError] = useState("");
+// const App = () => {
+//   // API = https://jsonplaceholder.typicode.com/users
+//   const [myData, setMyData] = useState([]);
+//   const [isError, setIsError] = useState("");
 
-  // Fetch data using axios on component mount
-  useEffect(() => {
-    axios.get("https://jsonplaceholder.typicode.com/users")
-      .then((response) => setMyData(response.data))
-      .catch((error) => setIsError(error.message));
-  }, []);
+//   // Fetch data using axios on component mount
+//   useEffect(() => {
+//     axios.get("https://jsonplaceholder.typicode.com/users")
+//       .then((response) => setMyData(response.data))
+//       .catch((error) => setIsError(error.message));
+//   }, []);
 
-  // Fetch data using fetch API manually
-  const fetchData = async () => {
-    try {
-      const response = await fetch("https://jsonplaceholder.typicode.com/users");
-      if (!response.ok) {
-        throw new Error("There is some error");
-      }
-      const data = await response.json();
-      setMyData(data);
-    } catch (error) {
-      setIsError(error.message);
+//   // Fetch data using fetch API manually
+//   const fetchData = async () => {
+//     try {
+//       const response = await fetch("https://jsonplaceholder.typicode.com/users");
+//       if (!response.ok) {
+//         throw new Error("There is some error");
+//       }
+//       const data = await response.json();
+//       setMyData(data);
+//     } catch (error) {
+//       setIsError(error.message);
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <h1>Axios and fetch</h1>
+//       {/* Display any error */}
+//       {isError && <p style={{ color: "red" }}>{isError}</p>}
+
+//       {/* Display user data */}
+//       <div>
+//         {myData.map((user) => (
+//           <div key={user.id}>
+//             <p>Email: {user.email}</p>
+//             <p>Phone: {user.phone}</p>
+//             <p>Website: {user.website}</p>
+//           </div>
+//         ))}
+//       </div>
+
+//       {/* Button to trigger fetchData */}
+//       <button onClick={fetchData}>Fetch Users with Fetch API</button>
+//     </div>
+//   );
+// }
+
+// export default App;
+
+//"https://jsonplaceholder.typicode.com/posts"
+
+import axios from "axios";
+import React , { useState, useEffect } from "react";
+const App=()=>{
+  const[posts, setPosts] = useState()
+
+  const fetchPosts  =async()=>{
+    try{
+      const response = await axios.get("'https://jsonplaceholder.typicode.com/posts'")
+      setPosts(response.data)
+    }catch(error){
+      console.log("error is there")
     }
-  };
+  }
+  //create a new post 
+  const createPost = async()=>{
+    try{
+      const response = await axios.post("'https://jsonplaceholder.typicode.com/posts'")
+    }
+  }
 
-  return (
-    <div>
-      <h1>Axios and fetch</h1>
-      {/* Display any error */}
-      {isError && <p style={{ color: "red" }}>{isError}</p>}
-
-      {/* Display user data */}
-      <div>
-        {myData.map((user) => (
-          <div key={user.id}>
-            <p>Email: {user.email}</p>
-            <p>Phone: {user.phone}</p>
-            <p>Website: {user.website}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* Button to trigger fetchData */}
-      <button onClick={fetchData}>Fetch Users with Fetch API</button>
-    </div>
-  );
+  useEffect(())
 }
-
-export default App;
