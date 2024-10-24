@@ -454,114 +454,162 @@
 // export default App;
 
 //"https://jsonplaceholder.typicode.com/posts"
+// import axios from "axios";
+// import React, { useState, useEffect } from "react";
+
+// const App = () => {
+//   const [posts, setPosts] = useState([]);
+//   const [newPost, setNewPost] = useState({ title: "", body: "" });
+//   const [isEditing, setIsEditing] = useState(false);
+//   const [postIdToEdit, setPostIdToEdit] = useState(null);
+
+//   // Fetch all posts
+//   const fetchPosts = async () => {
+//     try {
+//       const response = await axios.get("https://jsonplaceholder.typicode.com/posts");
+//       setPosts(response.data);
+//     } catch (error) {
+//       console.log("Error fetching posts", error);
+//     }
+//   };
+
+//   // Handle input change
+//   const handleChange = (e) => {
+//     setNewPost({ ...newPost, [e.target.name]: e.target.value });
+//   };
+
+//   // Create a new post
+//   const createPost = async () => {
+//     try {
+//       const response = await axios.post("https://jsonplaceholder.typicode.com/posts", newPost);
+//       setPosts([...posts, response.data]);
+//       setNewPost({ title: "", body: "" });
+//     } catch (error) {
+//       console.log("Error creating post", error);
+//     }
+//   };
+
+//   // Update the post
+//   const updatePost = async () => {
+//     try {
+//       const response = await axios.put(
+//         `https://jsonplaceholder.typicode.com/posts/${postIdToEdit}`,
+//         newPost
+//       );
+//       setPosts(
+//         posts.map((post) => (post.id === postIdToEdit ? response.data : post))
+//       );
+//       setNewPost({ title: "", body: "" });
+//       setIsEditing(false);
+//       setPostIdToEdit(null);
+//     } catch (error) {
+//       console.log("Error updating post", error);
+//     }
+//   };
+
+//   // Edit post handler
+//   const editPost = (post) => {
+//     setIsEditing(true);
+//     setNewPost({ title: post.title, body: post.body });
+//     setPostIdToEdit(post.id);
+//   };
+
+//   // Delete post
+//   const deletePost = async (postId) => {
+//     try {
+//       await axios.delete(`https://jsonplaceholder.typicode.com/posts/${postId}`);
+//       setPosts(posts.filter((post) => post.id !== postId));
+//     } catch (error) {
+//       console.log("Error deleting post", error);
+//     }
+//   };
+
+//   useEffect(() => {
+//     fetchPosts();
+//   }, []);
+
+//   return (
+//     <div>
+//       <h1>Axios CRUD operations</h1>
+//       <input
+//         type="text"
+//         name="title"
+//         placeholder="Title"
+//         value={newPost.title}
+//         onChange={handleChange}
+//       />
+//       <input
+//         type="text"
+//         name="body"
+//         placeholder="Body of the post"
+//         value={newPost.body}
+//         onChange={handleChange}
+//       />
+//       <button onClick={isEditing ? updatePost : createPost}>
+//         {isEditing ? "Update" : "Create"}
+//       </button>
+
+//       <h2>Posts</h2>
+//       <div>
+//         {posts.map((post) => (
+//           <div key={post.id}>
+//             <h3>{post.title}</h3>
+//             <p>{post.body}</p>
+//             <button onClick={() => editPost(post)}>Edit</button>
+//             <button onClick={() => deletePost(post.id)}>Delete</button>
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default App;
+
+import React, { useState } from "react";
 import axios from "axios";
-import React, { useState, useEffect } from "react";
 
-const App = () => {
-  const [posts, setPosts] = useState([]);
-  const [newPost, setNewPost] = useState({ title: "", body: "" });
-  const [isEditing, setIsEditing] = useState(false);
-  const [postIdToEdit, setPostIdToEdit] = useState(null);
+const UserDetails = () => {
+  const [userId, setUserId] = useState("");
+  const [userDetails, setUserDetails] = useState(null);
+  const [error, setError] = useState("");
 
-  // Fetch all posts
-  const fetchPosts = async () => {
+  const handleInputChange = (e) => {
+    setUserId(e.target.value);
+  };
+
+  const fetchUserDetails = async () => {
     try {
-      const response = await axios.get("https://jsonplaceholder.typicode.com/posts");
-      setPosts(response.data);
-    } catch (error) {
-      console.log("Error fetching posts", error);
+      const response = await axios.get(`https://jsonplaceholder.typicode.com/users/${userId}`);
+      setUserDetails(response.data);
+      setError("");
+    } catch (err) {
+      setUserDetails(null);
+      setError("User not found or invalid ID");
     }
   };
-
-  // Handle input change
-  const handleChange = (e) => {
-    setNewPost({ ...newPost, [e.target.name]: e.target.value });
-  };
-
-  // Create a new post
-  const createPost = async () => {
-    try {
-      const response = await axios.post("https://jsonplaceholder.typicode.com/posts", newPost);
-      setPosts([...posts, response.data]);
-      setNewPost({ title: "", body: "" });
-    } catch (error) {
-      console.log("Error creating post", error);
-    }
-  };
-
-  // Update the post
-  const updatePost = async () => {
-    try {
-      const response = await axios.put(
-        `https://jsonplaceholder.typicode.com/posts/${postIdToEdit}`,
-        newPost
-      );
-      setPosts(
-        posts.map((post) => (post.id === postIdToEdit ? response.data : post))
-      );
-      setNewPost({ title: "", body: "" });
-      setIsEditing(false);
-      setPostIdToEdit(null);
-    } catch (error) {
-      console.log("Error updating post", error);
-    }
-  };
-
-  // Edit post handler
-  const editPost = (post) => {
-    setIsEditing(true);
-    setNewPost({ title: post.title, body: post.body });
-    setPostIdToEdit(post.id);
-  };
-
-  // Delete post
-  const deletePost = async (postId) => {
-    try {
-      await axios.delete(`https://jsonplaceholder.typicode.com/posts/${postId}`);
-      setPosts(posts.filter((post) => post.id !== postId));
-    } catch (error) {
-      console.log("Error deleting post", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchPosts();
-  }, []);
 
   return (
     <div>
-      <h1>Axios CRUD operations</h1>
       <input
         type="text"
-        name="title"
-        placeholder="Title"
-        value={newPost.title}
-        onChange={handleChange}
+        value={userId}
+        onChange={handleInputChange}
+        placeholder="Enter user ID"
       />
-      <input
-        type="text"
-        name="body"
-        placeholder="Body of the post"
-        value={newPost.body}
-        onChange={handleChange}
-      />
-      <button onClick={isEditing ? updatePost : createPost}>
-        {isEditing ? "Update" : "Create"}
-      </button>
+      <button onClick={fetchUserDetails}>Fetch User Details</button>
 
-      <h2>Posts</h2>
-      <div>
-        {posts.map((post) => (
-          <div key={post.id}>
-            <h3>{post.title}</h3>
-            <p>{post.body}</p>
-            <button onClick={() => editPost(post)}>Edit</button>
-            <button onClick={() => deletePost(post.id)}>Delete</button>
-          </div>
-        ))}
-      </div>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      {userDetails && (
+        <div>
+          <p>ID: {userDetails.id}</p>
+          <p>Name: {userDetails.name}</p>
+          <p>Email: {userDetails.email}</p>
+          <p>City: {userDetails.address.city}</p>
+        </div>
+      )}
     </div>
   );
 };
 
-export default App;
+export default UserDetails;
