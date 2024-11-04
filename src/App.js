@@ -13,6 +13,8 @@
 // // }
 // // export default App;
 
+// const { createBrowserRouter } = require("react-router-dom");
+
 // //class component
 // // import React, { Component } from "react";
 // // class ClassComponent extends Component{
@@ -566,50 +568,75 @@
 
 // export default App;
 
-import React, { useState } from "react";
-import axios from "axios";
+// import React, { useState } from "react";
+// import axios from "axios";
 
-const UserDetails = () => {
-  const [userId, setUserId] = useState("");
-  const [userDetails, setUserDetails] = useState(null);
-  const [error, setError] = useState("");
+// const UserDetails = () => {
+//   const [userId, setUserId] = useState("");
+//   const [userDetails, setUserDetails] = useState(null);
+//   const [error, setError] = useState("");
 
-  const handleInputChange = (e) => {
-    setUserId(e.target.value);
-  };
+//   const handleInputChange = (e) => {
+//     setUserId(e.target.value);
+//   };
 
-  const fetchUserDetails = async () => {
-    try {
-      const response = await axios.get(`https://jsonplaceholder.typicode.com/users/${userId}`);
-      setUserDetails(response.data);
-      setError("");
-    } catch (err) {
-      setUserDetails(null);
-      setError("User not found or invalid ID");
-    }
-  };
+//   const fetchUserDetails = async () => {
+//     try {
+//       const response = await axios.get(`https://jsonplaceholder.typicode.com/users/${userId}`);
+//       setUserDetails(response.data);
+//       setError("");
+//     } catch (err) {
+//       setUserDetails(null);
+//       setError("User not found or invalid ID");
+//     }
+//   };
 
-  return (
-    <div>
-      <input
-        type="text"
-        value={userId}
-        onChange={handleInputChange}
-        placeholder="Enter user ID"
-      />
-      <button onClick={fetchUserDetails}>Fetch User Details</button>
+//   return (
+//     <div>
+//       <input
+//         type="text"
+//         value={userId}
+//         onChange={handleInputChange}
+//         placeholder="Enter user ID"
+//       />
+//       <button onClick={fetchUserDetails}>Fetch User Details</button>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {userDetails && (
-        <div>
-          <p>ID: {userDetails.id}</p>
-          <p>Name: {userDetails.name}</p>
-          <p>Email: {userDetails.email}</p>
-          <p>City: {userDetails.address.city}</p>
-        </div>
-      )}
-    </div>
-  );
-};
+//       {error && <p style={{ color: "red" }}>{error}</p>}
+//       {userDetails && (
+//         <div>
+//           <p>ID: {userDetails.id}</p>
+//           <p>Name: {userDetails.name}</p>
+//           <p>Email: {userDetails.email}</p>
+//           <p>City: {userDetails.address.city}</p>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
 
-export default UserDetails;
+// export default UserDetails;
+
+import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+import Home from './component/Home.js';
+import Contact from './component/Contact.js';
+import About from './component/About.js';
+
+const router = createBrowserRouter([
+  {
+    path: "/Home",
+    element: <Home/>
+  },
+  {
+    path:"/About",
+    element:<About/>
+  },
+  {
+    path:"/Contact",
+    element:<Contact/>
+  },
+])
+function App(){
+  return <RouterProvider router={router}></RouterProvider>
+}
+
+export default App;
