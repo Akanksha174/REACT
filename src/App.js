@@ -616,27 +616,233 @@
 
 // export default UserDetails;
 
-import {createBrowserRouter, RouterProvider} from 'react-router-dom';
-import Home from './component/Home.js';
-import Contact from './component/Contact.js';
-import About from './component/About.js';
+// import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+// import Home from './component/Home.js';
+// import Contact from './component/Contact.js';
+// import About from './component/About.js';
 
-const router = createBrowserRouter([
-  {
-    path: "/Home",
-    element: <Home/>
-  },
-  {
-    path:"/About",
-    element:<About/>
-  },
-  {
-    path:"/Contact",
-    element:<Contact/>
-  },
-])
-function App(){
-  return <RouterProvider router={router}></RouterProvider>
+// const router = createBrowserRouter([
+//   {
+//     path: "/Home",
+//     element: <Home/>
+//   },
+//   {
+//     path:"/About",
+//     element:<About/>
+//   },
+//   {
+//     path:"/Contact",
+//     element:<Contact/>
+//   },
+// ])
+// function App(){
+//   return <RouterProvider router={router}></RouterProvider>
+// }
+
+// export default App;
+
+
+// import React, { useState } from 'react';
+// import { useForm } from 'react-hook-form';
+
+// function InvestmentCalculator() {
+//   const { register, handleSubmit, reset } = useForm();
+//   const [investmentHistory, setInvestmentHistory] = useState([]);
+
+//   const calculateGrowth = (initialAmount, rate, years) => {
+//     return (initialAmount * Math.pow(1 + rate / 100, years)).toFixed(2);
+//   };
+
+//   const onSubmit = (data) => {
+//     const { initialAmount, interestRate, years } = data;
+//     const projectedGrowth = calculateGrowth(
+//       parseFloat(initialAmount),
+//       parseFloat(interestRate),
+//       parseInt(years)
+//     );
+
+//     setInvestmentHistory([
+//       ...investmentHistory,
+//       { initialAmount, interestRate, years, projectedGrowth }
+//     ]);
+//   };
+
+//   const resetHistory = () => {
+//     setInvestmentHistory([]);
+//     reset();
+//   };
+
+//   return (
+//     <div>
+//       <h2>Investment Growth Calculator</h2>
+//       <form onSubmit={handleSubmit(onSubmit)}>
+//         <div>
+//           <label>Initial Amount:</label>
+//           <input type="number" {...register('initialAmount', )} />
+//         </div>
+//         <div>
+//           <label>Interest Rate (%):</label>
+//           <input type="number" {...register('interestRate', )} />
+//         </div>
+//         <div>
+//           <label>Years:</label>
+//           <input type="number" {...register('years',)} />
+//         </div>
+//         <button type="submit">Calculate</button>
+//         <button type="button" onClick={resetHistory}>Reset History</button>
+//       </form>
+
+//       <h3>Investment History</h3>
+//       <ul>
+//         {investmentHistory.map((entry, index) => (
+//           <li key={index}>
+//             Initial Amount: ${entry.initialAmount}, Interest Rate: {entry.interestRate}%, Years: {entry.years}, Projected Growth: ${entry.projectedGrowth}
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// }
+
+// export default InvestmentCalculator;
+
+
+// import React from 'react';
+// import { useForm } from 'react-hook-form';
+
+// function RSVPForm() {
+//   const {
+//     register,
+//     handleSubmit,
+//     reset,
+//     formState: { errors }
+//   } = useForm();
+
+//   const onSubmit = (data) => {
+//     console.log("RSVP submitted:", data);
+//     reset();  
+//   };
+
+//   return (
+//     <div>
+//       <h2>RSVP for the Event</h2>
+//       <form onSubmit={handleSubmit(onSubmit)}>
+//         <div>
+//           <label>Name:</label>
+//           <input
+//             type="text"
+//             {...register('name', { required: 'Name is required' })}
+//           />
+//           {errors.name && <p>{errors.name.message}</p>}
+//         </div>
+
+//         <div>
+//           <label>Email:</label>
+//           <input
+//             type="email"
+//             {...register('email', {
+//               required: 'Email is required',
+//               pattern: {
+//                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+//                 message: 'Invalid email format'
+//               }
+//             })}
+//           />
+//           {errors.email && <p>{errors.email.message}</p>}
+//         </div>
+
+//         <div>
+//           <label>Number of Attendees:</label>
+//           <input
+//             type="number"
+//             {...register('attendees', {
+//               required: 'Number of attendees is required',
+//               min: {
+//                 value: 1,
+//                 message: 'Must be Positive'
+//               }
+//             })}
+//           />
+//           {errors.attendees && <p>{errors.attendees.message}</p>}
+//         </div>
+
+//         <button type="submit">Submit</button>
+//       </form>
+//     </div>
+//   );
+// }
+
+// export default RSVPForm;
+
+import React from 'react';
+import { useForm } from 'react-hook-form';
+
+function RSVPForm() {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm();
+
+  const onSubmit = (data) => {
+    console.log("RSVP submitted:", data);
+    reset();
+  };
+
+  return (
+    <div>
+      <h2>RSVP for the Event</h2>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <label>Name:</label>
+          <input
+            type="text"
+            {...register('name', { 
+              required: 'Name is required',
+              pattern:{
+              value: /^[A-Za-z]+$/i,
+              message: 'MUST BE STRING',
+              }
+            })}
+          />
+          {errors.name && <p>{errors.name.message}</p>}
+        </div>
+
+        <div>
+          <label>Email:</label>
+          <input
+            type="email"
+            {...register('email', {
+              required: 'Email is required',
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: 'Invalid email format'
+              }
+            })}
+          />
+          {errors.email && <p>{errors.email.message}</p>}
+        </div>
+
+        <div>
+          <label>Number of Attendees:</label>
+          <input
+            type="number"
+            {...register('attendees', {
+              required: 'Number of attendees is required',
+              min: {
+                value: 1,
+                message: 'Number of attendees must be at least 1'
+              }
+            })}
+          />
+          {errors.attendees && <p>{errors.attendees.message}</p>}
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  );
 }
 
-export default App;
+export default RSVPForm;
