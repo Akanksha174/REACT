@@ -642,69 +642,69 @@
 // export default App;
 
 
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+// import React, { useState } from 'react';
+// import { useForm } from 'react-hook-form';
 
-function InvestmentCalculator() {
-  const { register, handleSubmit, reset } = useForm();
-  const [investmentHistory, setInvestmentHistory] = useState([]);
+// function InvestmentCalculator() {
+//   const { register, handleSubmit, reset } = useForm();
+//   const [investmentHistory, setInvestmentHistory] = useState([]);
 
-  const calculateGrowth = (initialAmount, rate, years) => {
-    return (initialAmount * Math.pow(1 + rate / 100, years)).toFixed(2);
-  };
+//   const calculateGrowth = (initialAmount, rate, years) => {
+//     return (initialAmount * Math.pow(1 + rate / 100, years)).toFixed(2);
+//   };
 
-  const onSubmit = (data) => {
-    const { initialAmount, interestRate, years } = data;
-    const projectedGrowth = calculateGrowth(
-      parseFloat(initialAmount),
-      parseFloat(interestRate),
-      parseInt(years)
-    );
+//   const onSubmit = (data) => {
+//     const { initialAmount, interestRate, years } = data;
+//     const projectedGrowth = calculateGrowth(
+//       parseFloat(initialAmount),
+//       parseFloat(interestRate),
+//       parseInt(years)
+//     );
 
-    setInvestmentHistory([
-      ...investmentHistory,
-      { initialAmount, interestRate, years, projectedGrowth }
-    ]);
-  };
+//     setInvestmentHistory([
+//       ...investmentHistory,
+//       { initialAmount, interestRate, years, projectedGrowth }
+//     ]);
+//   };
 
-  const resetHistory = () => {
-    setInvestmentHistory([]);
-    reset();
-  };
+//   const resetHistory = () => {
+//     setInvestmentHistory([]);
+//     reset();
+//   };
 
-  return (
-    <div>
-      <h2>Investment Growth Calculator</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label>Initial Amount:</label>
-          <input type="number" {...register('initialAmount', )} />
-        </div>
-        <div>
-          <label>Interest Rate (%):</label>
-          <input type="number" {...register('interestRate', )} />
-        </div>
-        <div>
-          <label>Years:</label>
-          <input type="number" {...register('years',)} />
-        </div>
-        <button type="submit">Calculate</button>
-        <button type="button" onClick={resetHistory}>Reset History</button>
-      </form>
+//   return (
+//     <div>
+//       <h2>Investment Growth Calculator</h2>
+//       <form onSubmit={handleSubmit(onSubmit)}>
+//         <div>
+//           <label>Initial Amount:</label>
+//           <input type="number" {...register('initialAmount', )} />
+//         </div>
+//         <div>
+//           <label>Interest Rate (%):</label>
+//           <input type="number" {...register('interestRate', )} />
+//         </div>
+//         <div>
+//           <label>Years:</label>
+//           <input type="number" {...register('years',)} />
+//         </div>
+//         <button type="submit">Calculate</button>
+//         <button type="button" onClick={resetHistory}>Reset History</button>
+//       </form>
 
-      <h3>Investment History</h3>
-      <ul>
-        {investmentHistory.map((entry, index) => (
-          <li key={index}>
-            Initial Amount: ${entry.initialAmount}, Interest Rate: {entry.interestRate}%, Years: {entry.years}, Projected Growth: ${entry.projectedGrowth}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
+//       <h3>Investment History</h3>
+//       <ul>
+//         {investmentHistory.map((entry, index) => (
+//           <li key={index}>
+//             Initial Amount: ${entry.initialAmount}, Interest Rate: {entry.interestRate}%, Years: {entry.years}, Projected Growth: ${entry.projectedGrowth}
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// }
 
-export default InvestmentCalculator;
+// export default InvestmentCalculator;
 
 
 // import React from 'react';
@@ -846,3 +846,32 @@ export default InvestmentCalculator;
 // }
 
 // export default RSVPForm;
+
+
+
+
+import React, { useState } from 'react';
+
+const Counter = () => {
+  const [count, setCount] = useState(0);
+
+  const increment = () => {
+    setCount((prevCount) => prevCount + 1); 
+  };
+
+  const decrement = () => {
+    setCount((prevCount) => prevCount - 1); 
+  };
+
+  return (
+    <div style={{ textAlign: 'center', marginTop: '50px' }}>
+      <h1>Counter</h1>
+      <h2>{count}</h2>
+      <button onClick={increment}>Increment</button>
+  
+      <button onClick={decrement}> Decrement</button>
+    </div>
+  );
+};
+
+export default Counter;
